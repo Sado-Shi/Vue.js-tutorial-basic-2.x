@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div id="app">
+    <h1>チュートリアルToDoリスト</h1>
+    <!-- 絞り込みラジオボタン -->
+    <label v-for="option in options">
+      <input type="radio" v-model="now" v-bind:value="option.value">{{ option.label }}
+    </label>
+
+    ({{ changeTodos.length }} 件を表示中)
+    <table>
+      <!-- テーブルヘッダー -->
+      <thead>
+        <tr>
+          <th class="id">ID</th>
+          <th class="commnet">コメント</th>
+          <th class="state">状態</th>
+          <th class="button">削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
+        <tr v-for="item in changeTodos" v-bind:key="item.id">
+          <th>{{ item.id }}</th>
+          <td>{{ item.comment }}</td>
+          <td class="state">
+            <button @click="changeState(item)">{{ labels[item.state] }}</button>
+          </td>
+          <td class="button">
+            <button @click="doDelete(item)">削除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 新規登録フォーム -->
+    <h2>新しい作業の追加</h2>
+    <form class="add-form" @submit.prevent="doAdd">
+      <label for="comment">コメント</label>
+      <input type="text" ref="comment" id="comment">
+      <button type="submit">追加</button>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>
